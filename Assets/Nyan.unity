@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23961d0d9e2ebed89bddc177e762d355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tint: {r: 1, g: 0.9433962, b: 0.9433962, a: 1}
+  _tint: {r: 1, g: 0.979, b: 0.99615, a: 1}
   _offsetX: -0.005
   _offsetY: 0
   _rotation: 0

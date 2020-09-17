@@ -199,8 +199,8 @@ MonoBehaviour:
   _tint: {r: 1, g: 0.987, b: 1, a: 1}
   _offsetX: 0
   _offsetY: 0
-  _rotation: 0.2
-  _scale: 1.01
+  _rotation: 0.4
+  _scale: 1.02
   _filter: 0
 --- !u!1 &1252745239
 GameObject:
