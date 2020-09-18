@@ -235,11 +235,11 @@ MonoBehaviour:
   priority: 0
   customPasses:
   - id: 0
-  injectionPoint: 1
+  injectionPoint: 2
   references:
     version: 1
     00000000:
-      type: {class: FeedbackEffectPass, ns: Kino, asm: Assembly-CSharp}
+      type: {class: FeedbackEffectPass, ns: Kino, asm: Kino.Feedback.Runtime}
       data:
         m_Name: Custom Pass
         enabled: 1
@@ -275,11 +275,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23961d0d9e2ebed89bddc177e762d355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tint: {r: 1, g: 1, b: 1, a: 1}
+  _tint: {r: 1, g: 0.9433962, b: 0.9433962, a: 1}
   _offsetX: 0
   _offsetY: 0
-  _rotation: 8
-  _scale: 1.01
+  _rotation: 1
+  _scale: 1.05
   _filter: 1
 --- !u!1 &1323625113
 GameObject:

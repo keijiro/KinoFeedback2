@@ -57,6 +57,12 @@
       },
       "url": "https://packages.unity.com"
     },
+    "jp.keijiro.kino.feedback": {
+      "version": "file:jp.keijiro.kino.feedback",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.modules.animation": {
       "version": "1.0.0",
       "depth": 0,

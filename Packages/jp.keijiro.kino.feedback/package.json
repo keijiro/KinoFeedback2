@@ -1,0 +1,13 @@
+{
+  "author": "Keijiro Takahashi",
+  "dependencies": {},
+  "description": "Old-school frame feedback effect for HDRP",
+  "displayName": "KinoFeedback",
+  "keywords": [ "unity" ],
+  "license": "Unlicense",
+  "name": "jp.keijiro.kino.feedback",
+  "repository": "github:keijiro/KinoFeedback2",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "version": "1.0.0"
+}
