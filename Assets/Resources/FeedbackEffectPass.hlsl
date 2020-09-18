@@ -14,18 +14,22 @@
 Texture2D _FeedbackTexture;
 
 float3 _Tint;
-float2 _Offset;
-float4 _Rotation;
-float _Scale;
+float4 _Xform;
+
+float3x3 ConstructTransformMatrix()
+{
+    return float3x3(_Xform.y, -_Xform.x, _Xform.z,
+                    _Xform.x,  _Xform.y, _Xform.w,
+                           0,         0,        1);
+}
 
 float3 SampleFeedbackTexture(float2 uv)
 {
+#ifdef KINO_POINT_SAMPLER
+    return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_point_clamp_sampler, uv, 0).rgb;
+#else
     return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_trilinear_clamp_sampler, uv, 0).rgb;
-}
-
-float2x2 GetRotationMatrix()
-{
-    return float2x2(_Rotation.xy, _Rotation.zw);
+#endif
 }
 
 float4 FullScreenPass(Varyings varyings) : SV_Target
@@ -34,8 +38,8 @@ float4 FullScreenPass(Varyings varyings) : SV_Target
     uint2 pcs = varyings.positionCS.xy;
     float2 uv = (pcs + 0.5) / _ScreenSize.xy;
 
-    // Feedback displacement
-    uv = mul(GetRotationMatrix(), uv - 0.5) * _Scale + 0.5 + _Offset;
+    // Feedback transform
+    uv = mul(ConstructTransformMatrix(), float3(uv - 0.5, 1)).xy + 0.5;
 
     // Composition
     float3 c1 = LoadCameraColor(pcs);
