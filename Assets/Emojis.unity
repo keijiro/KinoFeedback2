@@ -303,11 +303,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23961d0d9e2ebed89bddc177e762d355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tint: {r: 1, g: 0.98837423, b: 0.98039216, a: 1}
+  _tint: {r: 0.99, g: 0.99, b: 0.99, a: 0}
+  _hueShift: 0.04
   _offsetX: 0
   _offsetY: 0
-  _rotation: 1.8
-  _scale: 1.01
+  _rotation: 0.7
+  _scale: 1.02
   _filter: 1
 --- !u!1 &1323625113
 GameObject:

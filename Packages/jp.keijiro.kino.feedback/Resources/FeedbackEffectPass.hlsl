@@ -13,7 +13,7 @@
 
 Texture2D _FeedbackTexture;
 
-float3 _Tint;
+float4 _Tint; // R, G, B, Hue shift
 float4 _Xform;
 
 float3x3 ConstructTransformMatrix()
@@ -32,6 +32,15 @@ float3 SampleFeedbackTexture(float2 uv)
 #endif
 }
 
+float3 ApplyTint(float3 rgb)
+{
+    rgb = RgbToHsv(rgb);
+    rgb.x = frac(rgb.x + _Tint.a);
+    rgb = HsvToRgb(rgb);
+    rgb *= _Tint.rgb;
+    return rgb;
+}
+
 float4 FullScreenPass(Varyings varyings) : SV_Target
 {
     // Screen/UV coordinates
@@ -43,6 +52,6 @@ float4 FullScreenPass(Varyings varyings) : SV_Target
 
     // Composition
     float3 c1 = LoadCameraColor(pcs);
-    float3 c2 = SampleFeedbackTexture(uv) * _Tint;
+    float3 c2 = ApplyTint(SampleFeedbackTexture(uv));
     return float4(LoadCameraDepth(pcs) == 0 ? c2 : c1, 1);
 }

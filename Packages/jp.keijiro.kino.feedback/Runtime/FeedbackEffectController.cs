@@ -6,7 +6,8 @@ public sealed class FeedbackEffectController : MonoBehaviour
 {
     #region Editable attributes
 
-    [SerializeField] Color _tint = Color.white;
+    [SerializeField, ColorUsage(false)] Color _tint = Color.white;
+    [SerializeField] float _hueShift = 0;
     [SerializeField] float _offsetX = 0;
     [SerializeField] float _offsetY = 0;
     [SerializeField] float _rotation = 0;
@@ -19,6 +20,9 @@ public sealed class FeedbackEffectController : MonoBehaviour
 
     public Color tint
       { get => _tint; set => _tint = value; }
+
+    public float hueShift
+      { get => _hueShift; set => _hueShift = value; }
 
     public float offsetX
       { get => _offsetX; set => _offsetX = value; }
@@ -44,6 +48,9 @@ public sealed class FeedbackEffectController : MonoBehaviour
 
     MaterialPropertyBlock _props;
 
+    Color GetTintColor()
+      => new Color(_tint.r, _tint.g, _tint.b, _hueShift);
+
     Vector4 GetTransformVector()
     {
         var angle = Mathf.Deg2Rad * -_rotation;
@@ -62,7 +69,7 @@ public sealed class FeedbackEffectController : MonoBehaviour
     MaterialPropertyBlock UpdatePropertyBlock()
     {
         if (_props == null) _props = new MaterialPropertyBlock();
-        _props.SetColor(TintID, _tint);
+        _props.SetColor(TintID, GetTintColor());
         _props.SetVector(XformID, GetTransformVector());
         return _props;
     }

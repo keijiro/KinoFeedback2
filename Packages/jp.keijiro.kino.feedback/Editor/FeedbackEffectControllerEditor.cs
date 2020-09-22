@@ -6,6 +6,7 @@ namespace Kino {
 sealed class FeedbackEffectControllerEditor : Editor
 {
     SerializedProperty _tint;
+    SerializedProperty _hueShift;
     SerializedProperty _offsetX;
     SerializedProperty _offsetY;
     SerializedProperty _rotation;
@@ -15,6 +16,7 @@ sealed class FeedbackEffectControllerEditor : Editor
     void OnEnable()
     {
         _tint = serializedObject.FindProperty("_tint");
+        _hueShift = serializedObject.FindProperty("_hueShift");
         _offsetX = serializedObject.FindProperty("_offsetX");
         _offsetY = serializedObject.FindProperty("_offsetY");
         _rotation = serializedObject.FindProperty("_rotation");
@@ -26,6 +28,7 @@ sealed class FeedbackEffectControllerEditor : Editor
     {
         serializedObject.Update();
         EditorGUILayout.PropertyField(_tint);
+        EditorGUILayout.PropertyField(_hueShift);
         EditorGUILayout.PropertyField(_offsetX);
         EditorGUILayout.PropertyField(_offsetY);
         EditorGUILayout.PropertyField(_rotation);
