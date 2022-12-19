@@ -30,8 +30,8 @@ public sealed class FeedbackEffectPass : CustomPass
       (ScriptableRenderContext renderContext, CommandBuffer cmd)
     {
         _material = CoreUtils.CreateEngineMaterial("Hidden/Kino/Feedback2");
-        _buffer1 = RTHandles.Alloc(Vector2.one, colorFormat:BufferFormat, name:"Feedback Buffer 1");
-        _buffer2 = RTHandles.Alloc(Vector2.one, colorFormat:BufferFormat, name:"Feedback Buffer 2");
+        _buffer1 = RTHandles.Alloc(Vector2.one, colorFormat:BufferFormat, name:"Feedback Buffer 1", useDynamicScale: true);
+        _buffer2 = RTHandles.Alloc(Vector2.one, colorFormat:BufferFormat, name:"Feedback Buffer 2", useDynamicScale: true);
     }
 
     protected override void Execute
@@ -48,7 +48,7 @@ public sealed class FeedbackEffectPass : CustomPass
         CoreUtils.DrawFullScreen(cmd, _material, props, pass);
 
         // Do it again to the feedback buffer.
-        CoreUtils.SetRenderTarget(cmd, _buffer2, ClearFlag.None);
+        CoreUtils.SetRenderTarget(cmd, _buffer2, ClearFlag.Color);
         CoreUtils.DrawFullScreen(cmd, _material, props, pass);
 
         // Buffer swap
