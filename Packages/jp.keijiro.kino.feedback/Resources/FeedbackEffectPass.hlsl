@@ -1,17 +1,8 @@
-//
 // Feedback custom pass shader
-//
-// This is not the best implementation of a feedback effect. There are some
-// points to be improved.
-//
-// - The current implementation invokes FullScreenPass twice with the camera
-//   buffer and the feedback buffer. Is it possible to use MRT to join them?
-// - Should I use Z-Test instead of branching-by-depth?
-//
 
 #include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/RenderPass/CustomPass/CustomPassCommon.hlsl"
 
-Texture2D _FeedbackTexture;
+TEXTURE2D_X(_FeedbackTexture);
 
 float4 _Tint; // R, G, B, Hue shift
 float4 _Xform;
@@ -28,7 +19,7 @@ float3 SampleFeedbackTexture(float2 uv)
 #ifdef KINO_POINT_SAMPLER
     return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_point_clamp_sampler, uv, 0).rgb;
 #else
-    return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_trilinear_clamp_sampler, uv, 0).rgb;
+    return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_linear_clamp_sampler, uv, 0).rgb;
 #endif
 }
 
@@ -43,15 +34,22 @@ float3 ApplyTint(float3 rgb)
 
 float4 FullScreenPass(Varyings varyings) : SV_Target
 {
-    // Screen/UV coordinates
-    uint2 pcs = varyings.positionCS.xy;
-    float2 uv = (pcs + 0.5) / _ScreenSize.xy;
+    UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(varyings);
+
+    float3 c1 = LoadCameraColor(varyings.positionCS.xy);
+    float depth = LoadCameraDepth(varyings.positionCS.xy);
+
+    PositionInputs posInput =
+      GetPositionInput(varyings.positionCS.xy, _ScreenSize.zw,
+                       depth, UNITY_MATRIX_I_VP, UNITY_MATRIX_V);
+
+    float2 uv = posInput.positionNDC.xy;
 
     // Feedback transform
     uv = mul(ConstructTransformMatrix(), float3(uv - 0.5, 1)).xy + 0.5;
+    uv = saturate(uv) * _RTHandleScale.xy;
 
     // Composition
-    float3 c1 = LoadCameraColor(pcs);
     float3 c2 = ApplyTint(SampleFeedbackTexture(uv));
-    return float4(LoadCameraDepth(pcs) == 0 ? c2 : c1, 1);
+    return float4(depth == 0 ? c2 : c1, 1);
 }
