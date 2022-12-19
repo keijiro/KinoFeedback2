@@ -11,6 +11,6 @@ jobs:
       with:
         registry-url: 'https://registry.npmjs.org'
     - run: npm publish
-      working-directory: jp.keijiro.kino.feedback
+      working-directory: Packages/jp.keijiro.kino.feedback
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
