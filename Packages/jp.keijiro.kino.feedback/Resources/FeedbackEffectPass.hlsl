@@ -36,20 +36,21 @@ float4 FullScreenPass(Varyings varyings) : SV_Target
 {
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(varyings);
 
-    float3 c1 = LoadCameraColor(varyings.positionCS.xy);
+    // Input
+    float3 color = LoadCameraColor(varyings.positionCS.xy);
     float depth = LoadCameraDepth(varyings.positionCS.xy);
 
-    PositionInputs posInput =
-      GetPositionInput(varyings.positionCS.xy, _ScreenSize.zw,
-                       depth, UNITY_MATRIX_I_VP, UNITY_MATRIX_V);
-
-    float2 uv = posInput.positionNDC.xy;
+    // Screen/UV coordinates
+    PositionInputs pos = GetPositionInput
+      (varyings.positionCS.xy, _ScreenSize.zw,
+       depth, UNITY_MATRIX_I_VP, UNITY_MATRIX_V);
+    float2 uv = pos.positionNDC.xy;
 
     // Feedback transform
     uv = mul(ConstructTransformMatrix(), float3(uv - 0.5, 1)).xy + 0.5;
     uv = saturate(uv) * _RTHandleScale.xy;
 
     // Composition
-    float3 c2 = ApplyTint(SampleFeedbackTexture(uv));
-    return float4(depth == 0 ? c2 : c1, 1);
+    float3 feedback = ApplyTint(SampleFeedbackTexture(uv));
+    return float4(depth == 0 ? feedback : color, 1);
 }
