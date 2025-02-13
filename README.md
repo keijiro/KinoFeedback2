@@ -10,40 +10,9 @@ old-school frame feedback effect.
 Installation
 ------------
 
-This package uses the [scoped registry] feature to resolve package
-dependencies. Please add the following sections to the manifest file
-(Packages/manifest.json).
+The KinoFeedback2 package (`jp.keijiro.kino.feedback`) can be installed via the
+"Keijiro" scoped registry using Package Manager. To add the registry to your
+project, please follow [these instructions].
 
-[scoped registry]: https://docs.unity3d.com/Manual/upm-scoped.html
-
-To the `scopedRegistries` section:
-
-```
-{
-  "name": "Keijiro",
-  "url": "https://registry.npmjs.com",
-  "scopes": [ "jp.keijiro" ]
-}
-```
-
-To the `dependencies` section:
-
-```
-"jp.keijiro.kino.feedback": "1.0.1"
-```
-
-After changes, the manifest file should look like below:
-
-```
-{
-  "scopedRegistries": [
-    {
-      "name": "Keijiro",
-      "url": "https://registry.npmjs.com",
-      "scopes": [ "jp.keijiro" ]
-    }
-  ],
-  "dependencies": {
-    "jp.keijiro.kino.feedback": "1.0.1",
-    ...
-```
+[these instructions]:
+  https://gist.github.com/keijiro/f8c7e8ff29bfe63d86b888901b82644c
