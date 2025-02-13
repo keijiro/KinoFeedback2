@@ -2,7 +2,7 @@
 
 #include "Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/RenderPass/CustomPass/CustomPassCommon.hlsl"
 
-TEXTURE2D_X(_FeedbackTexture);
+TEXTURE2D(_FeedbackTexture);
 
 float4 _Tint; // R, G, B, Hue shift
 float4 _Xform;
@@ -17,9 +17,9 @@ float3x3 ConstructTransformMatrix()
 float3 SampleFeedbackTexture(float2 uv)
 {
 #ifdef KINO_POINT_SAMPLER
-    return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_point_clamp_sampler, uv, 0).rgb;
+    return SAMPLE_TEXTURE2D(_FeedbackTexture, s_point_clamp_sampler, uv).rgb;
 #else
-    return SAMPLE_TEXTURE2D_X_LOD(_FeedbackTexture, s_linear_clamp_sampler, uv, 0).rgb;
+    return SAMPLE_TEXTURE2D(_FeedbackTexture, s_linear_clamp_sampler, uv).rgb;
 #endif
 }
 
